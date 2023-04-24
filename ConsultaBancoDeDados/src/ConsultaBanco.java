@@ -21,7 +21,7 @@ public class ConsultaBanco {
 		} catch (SQLException e) {
 			System.out.println("Erro ao executar a consulta.");
 			e.printStackTrace();
-		} finally {
+		} finally {                                              
 			ConexaoBanco.fecharConexao();
 		}
 	}
