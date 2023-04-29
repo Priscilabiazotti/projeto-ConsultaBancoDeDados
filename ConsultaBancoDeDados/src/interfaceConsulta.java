@@ -1,63 +1,86 @@
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField; // importação adicionada
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class interfaceConsulta {
 
-    private JFrame frame;
+	private JFrame frame;
+	private JTextField nomeField;
+	private JTextArea resultadoArea;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    interfaceConsulta window = new interfaceConsulta();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					interfaceConsulta window = new interfaceConsulta();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-    public interfaceConsulta() {
-        initialize();
-    }
+	public interfaceConsulta() {
+		initialize();
+	}
 
-    private void initialize() {
-        frame = new JFrame();
-        frame.setBounds(100, 100, 450, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
-        
-        JButton btnConsulta = new JButton("Consultar");
-        btnConsulta.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                // Criar a nova janela de consulta
-                JFrame consultaFrame = new JFrame("Consultar Cliente");
-                consultaFrame.setSize(400, 200);
-                consultaFrame.setLocationRelativeTo(null);
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 
-                // Adicionar componentes Swing à nova janela
-                JLabel nomeLabel = new JLabel("Nome:");
-                nomeLabel.setBounds(10, 10, 80, 25);
-                consultaFrame.add(nomeLabel);
-                
-                JTextField nomeField = new JTextField(20); // criar o campo de texto
-                nomeField.setBounds(100, 10, 200, 25);
-                consultaFrame.add(nomeField);
+		JButton btnConsulta = new JButton("Consultar");
+		btnConsulta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// obter o texto do campo de texto de nome
+				String nome = nomeField.getText();
 
-                // Tornar a nova janela visível
-                consultaFrame.setVisible(true);
-            }
-        });
-        btnConsulta.setBounds(167, 106, 97, 25);
-        frame.getContentPane().add(btnConsulta);
-        
-        frame.setVisible(true);
-    }
+				// executar a consulta no banco de dados
+				try {
+					String resultado = ConsultaBanco.consultar(nome);
+
+					// exibir o resultado na área de texto
+					resultadoArea.setText(resultado);
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(frame, "Erro ao executar a consulta: " + e.getMessage(),
+							"Erro de consulta", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				}
+			}
+		});
+		btnConsulta.setBounds(167, 106, 97, 25);
+		frame.getContentPane().add(btnConsulta);
+
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setBounds(12, 29, 56, 16);
+		frame.getContentPane().add(lblNome);
+
+		nomeField = new JTextField();
+		nomeField.setBounds(67, 26, 250, 22);
+		frame.getContentPane().add(nomeField);
+		nomeField.setColumns(10);
+
+		resultadoArea = new JTextArea();
+		resultadoArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+		resultadoArea.setBounds(12, 72, 410, 168);
+		frame.getContentPane().add(resultadoArea);
+
+		JLabel lblResultado = new JLabel("Resultado:");
+		lblResultado.setBounds(12, 53, 73, 16);
+		frame.getContentPane().add(lblResultado);
+
+		frame.setVisible(true);
+	}
 }

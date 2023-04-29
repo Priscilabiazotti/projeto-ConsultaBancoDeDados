@@ -6,22 +6,22 @@ import java.sql.SQLException;
 
 public class ConsultaBanco {
 
-	public static void consultar() {
+	public static String consultar(String nome) throws SQLException {
 		Connection conexao = ConexaoBanco.getConexao();
-		String sql = "SELECT * FROM cadastro";
+		String sql = "SELECT * FROM cadastro WHERE nome = ?";
 		try {
 			PreparedStatement statement = conexao.prepareStatement(sql);
+			statement.setString(1, nome);
 			ResultSet resultSet = statement.executeQuery();
+			String resultado = "";
 			while (resultSet.next()) {
 				int id = resultSet.getInt("id");
-				String nome = resultSet.getString("nome");
+				String nomeConsulta = resultSet.getString("nome");
 				// Adicione os outros campos da tabela
-				System.out.println(id + " - " + nome);
+				resultado += (id + " - " + nomeConsulta + "\n");
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro ao executar a consulta.");
-			e.printStackTrace();
-		} finally {                                              
+			return resultado;
+		} finally {
 			ConexaoBanco.fecharConexao();
 		}
 	}
