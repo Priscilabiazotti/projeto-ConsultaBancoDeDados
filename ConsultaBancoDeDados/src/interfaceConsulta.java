@@ -63,6 +63,16 @@ public class interfaceConsulta {
 		btnConsulta.setBounds(167, 106, 97, 25);
 		frame.getContentPane().add(btnConsulta);
 
+		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nomeField.setText("");
+				resultadoArea.setText("");
+			}
+		});
+		btnLimpar.setBounds(276, 106, 97, 25);
+		frame.getContentPane().add(btnLimpar);
+
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(12, 29, 56, 16);
 		frame.getContentPane().add(lblNome);

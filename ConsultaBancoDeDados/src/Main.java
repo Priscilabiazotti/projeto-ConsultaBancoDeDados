@@ -6,9 +6,9 @@ public class Main {
     private static Connection conexao = null;
 
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/cadastro?user=Priscila&password=Qç3504Pa#*";
+    	String url = "jdbc:mysql://localhost:3306/cadastro?user=Priscila&password=Qç3504Pa%23*";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conexao = DriverManager.getConnection(url);
             System.out.println("Conexão estabelecida com sucesso!");
             conexao.close();
@@ -20,7 +20,6 @@ public class Main {
             e.printStackTrace();
         }
     }
-
     public static void fecharConexao() {
         if (conexao != null) {
             try {
