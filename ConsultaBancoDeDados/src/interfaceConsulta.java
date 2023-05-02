@@ -3,6 +3,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -90,6 +92,21 @@ public class interfaceConsulta {
 		JLabel lblResultado = new JLabel("Resultado:");
 		lblResultado.setBounds(12, 53, 73, 16);
 		frame.getContentPane().add(lblResultado);
+
+		resultadoArea.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int index = resultadoArea.getSelectedIndex();
+				if (index >= 0) {
+					String registro = resultadoArea.getText().split("\n")[index];
+					String[] campos = registro.split("-");
+					String email = campos[2].trim();
+					String telefone = campos[3].trim();
+					JOptionPane.showMessageDialog(frame, "E-mail: " + email + "\nTelefone: " + telefone,
+							"Informações adicionais", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 
 		frame.setVisible(true);
 	}
