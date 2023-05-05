@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -21,7 +22,25 @@ public class interfaceConsulta {
 	private JTextArea textArea;
 	private JButton btnConsultar;
 	private JButton btnLimpar;
+	private JButton btnSair;
 	private JLabel lblTitulo;
+	private JLabel lblUsuario;
+	private JTextField txtUsuario;
+	private JLabel lblSenha;
+	private JPasswordField txtSenha;
+
+
+	public class Autenticacao {
+
+		public static boolean validar(String usuario, String senha) {
+			// Lógica de autenticação aqui
+			if (usuario.equals("admin") && senha.equals("123")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -70,7 +89,7 @@ public class interfaceConsulta {
 						textArea.setText(resultado);
 					}
 				} catch (SQLException ex) {
-					ex.printStackTrace();
+					ex.printStackTrace();	
 				}
 			}
 		});
@@ -84,6 +103,14 @@ public class interfaceConsulta {
 			}
 		});
 		panel.add(btnLimpar);
+		
+		btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		panel.add(btnSair);
 
 		lblTitulo = new JLabel("Resultados da consulta:");
 		frame.getContentPane().add(lblTitulo, BorderLayout.WEST);
@@ -94,6 +121,51 @@ public class interfaceConsulta {
 		textArea = new JTextArea();
 		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
-	}
+		
+		JPanel panelLogin = new JPanel();
+		panelLogin.setLayout(new FlowLayout(FlowLayout.CENTER));
+		frame.getContentPane().add(panelLogin, BorderLayout.SOUTH);
 
+		lblUsuario = new JLabel("Usuário:");
+		panelLogin.add(lblUsuario);
+
+		txtUsuario = new JTextField();
+		txtUsuario.setColumns(10);
+		panelLogin.add(txtUsuario);
+
+		lblSenha = new JLabel("Senha:");
+		panelLogin.add(lblSenha);
+
+		txtSenha = new JPasswordField();
+		txtSenha.setColumns(10);
+		panelLogin.add(txtSenha);
+
+		// criação do botão de login
+		JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        // obtém as credenciais do usuário
+		        String usuario = txtUsuario.getText();
+		        String senha = new String(txtSenha.getPassword());
+
+		        // verifica se as credenciais são válidas
+		        if (Autenticacao.validar(usuario, senha)) {
+		            // se forem válidas, habilita a consulta
+		            textField.setEnabled(true);
+		            btnConsultar.setEnabled(true);
+		            btnLimpar.setEnabled(true);
+		            textArea.setEnabled(true);
+		            JOptionPane.showMessageDialog(frame, "Login realizado com sucesso.");
+		        } else {
+		            // se não forem válidas, desabilita a consulta e exibe mensagem de erro
+		            textField.setEnabled(false);
+		            btnConsultar.setEnabled(false);
+		            btnLimpar.setEnabled(false);
+		            textArea.setEnabled(false);
+		            JOptionPane.showMessageDialog(frame, "Credenciais inválidas. Tente novamente.");
+		        }
+		    }
+		});
+		panelLogin.add(btnLogin);
+     }
 }

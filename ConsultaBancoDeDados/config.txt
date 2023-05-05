@@ -1,0 +1,33 @@
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class Configuracao {
+
+    public static void salvarUsuarioESenha(String usuario, String senha) {
+        Properties prop = new Properties();
+        FileOutputStream fos = null;
+
+        try {
+            fos = new FileOutputStream("config.properties");
+
+            // Adiciona as informações de nome de usuário e senha no arquivo de configuração
+            prop.setProperty("usuario", usuario);
+            prop.setProperty("senha", senha);
+
+            // Salva as informações no arquivo de configuração
+            prop.store(fos, null);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+}
