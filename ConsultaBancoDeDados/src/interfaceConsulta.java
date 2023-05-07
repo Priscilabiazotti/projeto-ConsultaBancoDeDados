@@ -30,36 +30,43 @@ public class interfaceConsulta {
 	private JPasswordField txtSenha;
 
 
-	public class Autenticacao {
 
-		public static boolean validar(String usuario, String senha) {
-			// Lógica de autenticação aqui
-			if (usuario.equals("admin") && senha.equals("123")) {
-				return true;
-			} else {
-				return false;
+	public static void main(String[] args) {
+		// Exibe a tela de login
+		TelaLogin telaLogin = new TelaLogin();
+		telaLogin.setVisible(true);
+
+		// Aguarda o usuário informar as credenciais de login
+		while (!telaLogin.estaAutenticado()) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
+		}
+
+		// Verifica as credenciais de login
+		if (Autenticacao.validar(telaLogin.getUsuario(), telaLogin.getSenha())) {
+			// Cria e exibe a tela principal
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						interfaceConsulta window = new interfaceConsulta();
+						window.frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		} else {
+			// Exibe uma mensagem de erro e encerra o programa
+			JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.");
+			System.exit(0);
 		}
 	}
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					interfaceConsulta window = new interfaceConsulta();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public interfaceConsulta() {
-		initialize();
-	}
-
-	private void initialize() {
+	    
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,7 +96,7 @@ public class interfaceConsulta {
 						textArea.setText(resultado);
 					}
 				} catch (SQLException ex) {
-					ex.printStackTrace();	
+					ex.printStackTrace();
 				}
 			}
 		});
@@ -103,7 +110,7 @@ public class interfaceConsulta {
 			}
 		});
 		panel.add(btnLimpar);
-		
+
 		btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -121,7 +128,7 @@ public class interfaceConsulta {
 		textArea = new JTextArea();
 		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
-		
+
 		JPanel panelLogin = new JPanel();
 		panelLogin.setLayout(new FlowLayout(FlowLayout.CENTER));
 		frame.getContentPane().add(panelLogin, BorderLayout.SOUTH);
@@ -143,29 +150,29 @@ public class interfaceConsulta {
 		// criação do botão de login
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        // obtém as credenciais do usuário
-		        String usuario = txtUsuario.getText();
-		        String senha = new String(txtSenha.getPassword());
+			public void actionPerformed(ActionEvent e) {
+				// obtém as credenciais do usuário
+				String usuario = txtUsuario.getText();
+				String senha = new String(txtSenha.getPassword());
 
-		        // verifica se as credenciais são válidas
-		        if (Autenticacao.validar(usuario, senha)) {
-		            // se forem válidas, habilita a consulta
-		            textField.setEnabled(true);
-		            btnConsultar.setEnabled(true);
-		            btnLimpar.setEnabled(true);
-		            textArea.setEnabled(true);
-		            JOptionPane.showMessageDialog(frame, "Login realizado com sucesso.");
-		        } else {
-		            // se não forem válidas, desabilita a consulta e exibe mensagem de erro
-		            textField.setEnabled(false);
-		            btnConsultar.setEnabled(false);
-		            btnLimpar.setEnabled(false);
-		            textArea.setEnabled(false);
-		            JOptionPane.showMessageDialog(frame, "Credenciais inválidas. Tente novamente.");
-		        }
-		    }
+				// verifica se as credenciais são válidas
+				if (Autenticacao.validar(usuario, senha)) {
+					// se forem válidas, habilita a consulta
+					textField.setEnabled(true);
+					btnConsultar.setEnabled(true);
+					btnLimpar.setEnabled(true);
+					textArea.setEnabled(true);
+					JOptionPane.showMessageDialog(frame, "Login realizado com sucesso.");
+				} else {
+					// se não forem válidas, desabilita a consulta e exibe mensagem de erro
+					textField.setEnabled(false);
+					btnConsultar.setEnabled(false);
+					btnLimpar.setEnabled(false);
+					textArea.setEnabled(false);
+					JOptionPane.showMessageDialog(frame, "Credenciais inválidas. Tente novamente.");
+				}
+			}
 		});
 		panelLogin.add(btnLogin);
-     }
+	}
 }
