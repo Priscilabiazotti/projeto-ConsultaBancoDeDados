@@ -5,12 +5,12 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -24,12 +24,6 @@ public class interfaceConsulta {
 	private JButton btnLimpar;
 	private JButton btnSair;
 	private JLabel lblTitulo;
-	private JLabel lblUsuario;
-	private JTextField txtUsuario;
-	private JLabel lblSenha;
-	private JPasswordField txtSenha;
-
-
 
 	public static void main(String[] args) {
 		// Exibe a tela de login
@@ -66,7 +60,7 @@ public class interfaceConsulta {
 	}
 
 	public interfaceConsulta() {
-	    
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,51 +122,6 @@ public class interfaceConsulta {
 		textArea = new JTextArea();
 		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
-
-		JPanel panelLogin = new JPanel();
-		panelLogin.setLayout(new FlowLayout(FlowLayout.CENTER));
-		frame.getContentPane().add(panelLogin, BorderLayout.SOUTH);
-
-		lblUsuario = new JLabel("Usuário:");
-		panelLogin.add(lblUsuario);
-
-		txtUsuario = new JTextField();
-		txtUsuario.setColumns(10);
-		panelLogin.add(txtUsuario);
-
-		lblSenha = new JLabel("Senha:");
-		panelLogin.add(lblSenha);
-
-		txtSenha = new JPasswordField();
-		txtSenha.setColumns(10);
-		panelLogin.add(txtSenha);
-
-		// criação do botão de login
-		JButton btnLogin = new JButton("Login");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// obtém as credenciais do usuário
-				String usuario = txtUsuario.getText();
-				String senha = new String(txtSenha.getPassword());
-
-				// verifica se as credenciais são válidas
-				if (Autenticacao.validar(usuario, senha)) {
-					// se forem válidas, habilita a consulta
-					textField.setEnabled(true);
-					btnConsultar.setEnabled(true);
-					btnLimpar.setEnabled(true);
-					textArea.setEnabled(true);
-					JOptionPane.showMessageDialog(frame, "Login realizado com sucesso.");
-				} else {
-					// se não forem válidas, desabilita a consulta e exibe mensagem de erro
-					textField.setEnabled(false);
-					btnConsultar.setEnabled(false);
-					btnLimpar.setEnabled(false);
-					textArea.setEnabled(false);
-					JOptionPane.showMessageDialog(frame, "Credenciais inválidas. Tente novamente.");
-				}
-			}
-		});
-		panelLogin.add(btnLogin);
 	}
 }
+

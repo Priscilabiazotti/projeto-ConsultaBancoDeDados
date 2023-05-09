@@ -67,25 +67,25 @@ public class TelaLogin extends JDialog {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// verifica se as credenciais são válidas
-				if (Autenticacao.validar(getUsuario(), getSenha())) {
-					autenticado = true;
-					dispose();
-				} else {
-					autenticado = false;
-					textField.setText("");
-					passwordField.setText("");
-					textField.requestFocus();
-				}
-			}
+		JButton loginButton = new JButton("Login");
+		loginButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        // verifica se as credenciais são válidas
+		        if (Autenticacao.validar(getUsuario(), getSenha())) {
+		            autenticado = true;
+		            dispose();
+		        } else {
+		            autenticado = false;
+		            textField.setText("");
+		            passwordField.setText("");
+		            textField.requestFocus();
+		        }
+		    }
 		});
-		buttonPane.add(okButton);
-		getRootPane().setDefaultButton(okButton);
+		buttonPane.add(loginButton);
+		getRootPane().setDefaultButton(loginButton);
 
-		JButton cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton("Cancelar");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				autenticado = false;
