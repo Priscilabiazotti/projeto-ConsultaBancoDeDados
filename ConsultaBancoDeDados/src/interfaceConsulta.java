@@ -1,5 +1,6 @@
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -91,7 +92,8 @@ public class interfaceConsulta {
 					} else {
 						textArea.setText(resultado);
 					}
-					
+
+					Container nomesConsultados;
 					// Adicionar o nome consultado à lista
 					nomesConsultados.add(nome);
 				} catch (SQLException ex) {
@@ -129,4 +131,3 @@ public class interfaceConsulta {
 		scrollPane.setViewportView(textArea);
 	}
 }
-
