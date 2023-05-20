@@ -9,7 +9,7 @@ public class ConsultaBanco {
 	public static String consultar(String nome) throws SQLException {
 		Connection conexao = ConexaoBanco.getConexao();
 		String sql = "SELECT * FROM cadastro WHERE nome = ?";
-		try {
+		try { 
 			PreparedStatement statement = conexao.prepareStatement(sql);
 			statement.setString(1, nome);
 			ResultSet resultSet = statement.executeQuery();

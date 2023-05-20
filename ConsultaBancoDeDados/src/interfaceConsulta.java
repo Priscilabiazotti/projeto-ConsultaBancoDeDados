@@ -1,13 +1,11 @@
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -93,9 +91,8 @@ public class interfaceConsulta {
 						textArea.setText(resultado);
 					}
 
-					Container nomesConsultados;
-					// Adicionar o nome consultado à lista
-					nomesConsultados.add(nome);
+					
+					
 				} catch (SQLException ex) {
 					ex.printStackTrace();
 				}
