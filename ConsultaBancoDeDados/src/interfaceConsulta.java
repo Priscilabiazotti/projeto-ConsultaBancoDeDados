@@ -128,3 +128,5 @@ public class interfaceConsulta {
 		scrollPane.setViewportView(textArea);
 	}
 }
+
+
